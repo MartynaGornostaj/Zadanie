@@ -1,0 +1,31 @@
+---
+title: "Zadanie"
+format: html
+---
+
+
+```{python}
+import numpy as np
+import scipy.stats as st
+import matplotlib.pyplot as plt
+
+m = 10
+sigma = 2
+n = 1000
+N = 10
+Y = []
+
+for i in range(N):
+    data = np.random.normal(m, sigma, n)
+    confidence_interval = st.norm.interval(confidence=0.95, loc=np.mean(data), scale=st.sem(data))
+    y = [x for x in data if confidence_interval[0] <= x <= confidence_interval[1]]
+    Y.append(len(y))
+    print("Liczba próbek w przedziale ufności:", len(y))
+
+plt.hist(Y, bins=30, edgecolor='black')
+plt.title('Histogram próbek w przedziale ufności')
+plt.xlabel('Wartość próbki')
+plt.ylabel('Częstość')
+plt.grid(True)
+plt.show()
+```
